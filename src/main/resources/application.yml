@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: eureka-service
+server:
+  port: 8302
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8302/eureka
+    eureka-server-read-timeout-seconds: 0
+    
+zuul:
+  prefix: /api
+  routes:
+    db-service:
+      path: /db-service/**
+      url: http://${eureka.instance.hostname}:8300
+    stock-service:
+      path: /stock-service/**
+      url: http://${eureka.instance.hostname}:8301
+      
+      
